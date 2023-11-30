@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<form method="post"
+      action="{{url}}">
+    <input type="hidden"
+           name="SAMLResponse"
+           value="{{saml_response}}" />
+
+    <input type="hidden"
+           name="RelayState"
+           id="RelayState"
+           value="{{relay_state}}" />
+</form>
+
+<script>
+    var win = window.opener || window.parent;
+    if (win) {
+       var queryString = win.location.search;
+       var params = new URLSearchParams(queryString);
+       var q = params.get("RelayState");
+       if (q) {
+              document.querySelector('#RelayState').value = q;
+       }
+    }
+    window.onload = function () { document.forms[0].submit(); }
+</script>
+
+</html>
